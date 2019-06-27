@@ -159,7 +159,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/yinyukang/2019/06/27/windows本地整合jenkins和github/">windows本地整合jenkins和github</a>
+      <a class="article-title" href="/yinyukang/2019/06/27/windows本地整合jenkins和github/">windows持续集成jenkins和github构建vue</a>
     </h1>
   
 
@@ -172,7 +172,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="一-github创建token，并本地保存（jenkins配置会用到）"><a href="#一-github创建token，并本地保存（jenkins配置会用到）" class="headerlink" title="一.github创建token，并本地保存（jenkins配置会用到）"></a><strong>一.github创建token，并本地保存（jenkins配置会用到）</strong></h2><h3 id="nbsp-nbsp-1-github中点击头像，下拉里菜单里选择Settigns-gt-Developer-settings-gt-Personal-access-tokens"><a href="#nbsp-nbsp-1-github中点击头像，下拉里菜单里选择Settigns-gt-Developer-settings-gt-Personal-access-tokens" class="headerlink" title="&nbsp;&nbsp;1.github中点击头像，下拉里菜单里选择Settigns -&gt; Developer settings -&gt; Personal access tokens"></a>&nbsp;&nbsp;1.github中点击头像，下拉里菜单里选择Settigns -&gt; Developer settings -&gt; Personal access tokens</h3><h3 id="nbsp-nbsp-2-点击“Generate-new-token”，输入note，然后选中“repo”和“admin-repo-hook”，然后点击下面的Generate-token按钮。"><a href="#nbsp-nbsp-2-点击“Generate-new-token”，输入note，然后选中“repo”和“admin-repo-hook”，然后点击下面的Generate-token按钮。" class="headerlink" title="&nbsp;&nbsp;2.点击“Generate new token”，输入note，然后选中“repo”和“admin:repo_hook”，然后点击下面的Generate token按钮。"></a>&nbsp;&nbsp;2.点击“Generate new token”，输入note，然后选中“repo”和“admin:repo_hook”，然后点击下面的Generate token按钮。</h3><h3 id="nbsp-nbsp-3-本地保存创建的token-配置jenkins会用到"><a href="#nbsp-nbsp-3-本地保存创建的token-配置jenkins会用到" class="headerlink" title="&nbsp;&nbsp;3.本地保存创建的token,配置jenkins会用到"></a>&nbsp;&nbsp;3.本地保存创建的token,配置jenkins会用到</h3><h2 id="二-github-创建仓库"><a href="#二-github-创建仓库" class="headerlink" title="二.github 创建仓库"></a><strong>二.github 创建仓库</strong></h2><h3 id="nbsp-nbsp-点击github右上角“-”号，在下拉菜单里选择“create-repository”"><a href="#nbsp-nbsp-点击github右上角“-”号，在下拉菜单里选择“create-repository”" class="headerlink" title="&nbsp;&nbsp; 点击github右上角“+”号，在下拉菜单里选择“create repository”"></a>&nbsp;&nbsp; 点击github右上角“+”号，在下拉菜单里选择“create repository”</h3><h2 id="三-本地安装jenkins"><a href="#三-本地安装jenkins" class="headerlink" title="三.本地安装jenkins"></a><strong>三.本地安装jenkins</strong></h2><hr>
+<p><a href="https://jenkins.io/zh/" target="_blank" rel="noopener">jenkins下载地址</a>&gt;选择安装windows版本</p>
+<blockquote>
+<p>安装过程会有安装路径的设置、管理员密码设置、安装插件、设置用户名和密码  </p>
+</blockquote>
+<blockquote>
+<p>安装成功后，本地会自动起服务，jenkins本地访问的地址：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></p>
+</blockquote>
+<blockquote>
+<p>jenkins的密码设置在：path = 安装目录\Jenkins\secrets\initialAdminPassword</p>
+</blockquote>
+<blockquote>
+<p>jenkins的启动：net start jenkins</p>
+</blockquote>
+<blockquote>
+<p>jenkins的停止：net stop jenkins</p>
+</blockquote>
+<h2 id="四-jenkins的nodejs插件安装"><a href="#四-jenkins的nodejs插件安装" class="headerlink" title="四.jenkins的nodejs插件安装"></a><strong>四.jenkins的nodejs插件安装</strong></h2><h4 id="1-jenkins首页找到"><a href="#1-jenkins首页找到" class="headerlink" title="1.jenkins首页找到:"></a>1.jenkins首页找到:</h4><p>&nbsp;&nbsp;Manage Jenkins（Jenkins系统管理）-&gt; Manage Plugins</p>
+<h4 id="2-在可选插件里找到nodejs-plugin-或者搜索nodejs-plugin"><a href="#2-在可选插件里找到nodejs-plugin-或者搜索nodejs-plugin" class="headerlink" title="2.在可选插件里找到nodejs plugin,或者搜索nodejs plugin"></a>2.在可选插件里找到nodejs plugin,或者搜索nodejs plugin</h4><blockquote>
+<p>安装过程中，如果要卸载，卸载会卡住，可以重新启动jenkins。重启办法，在浏览器中输入：<a href="http://localhost:8080/restart" target="_blank" rel="noopener">http://localhost:8080/restart</a></p>
+</blockquote>
+<h2 id="五-本地安装ngrok反向代理"><a href="#五-本地安装ngrok反向代理" class="headerlink" title="五.本地安装ngrok反向代理"></a><strong>五.本地安装ngrok反向代理</strong></h2><p><a href="https://ngrok.com/" target="_blank" rel="noopener">下载地址：</a></p>
+<blockquote>
+<p>解压缩后，运行ngrok的shell ngrok  </p>
+</blockquote>
+<blockquote>
+<p>在命令窗口中运行 ngrok http 8080(jenkins的端口号)</p>
+</blockquote>
+<blockquote>
+<p>此时，完成了本地jenkins的反向代理。通过外网可以访问jenkins</p>
+</blockquote>
+<h2 id="六-完成github和jenkins的持续集成"><a href="#六-完成github和jenkins的持续集成" class="headerlink" title="六.完成github和jenkins的持续集成"></a><strong>六.完成github和jenkins的持续集成</strong></h2><h3 id="nbsp-nbsp-1-在github中配置Webhooks"><a href="#nbsp-nbsp-1-在github中配置Webhooks" class="headerlink" title="&nbsp;&nbsp;1.在github中配置Webhooks"></a>&nbsp;&nbsp;1.在github中配置Webhooks</h3><pre><code>打开步骤二所创建的github仓库，打开settings -&gt; Webhooks, 点击 “Add webhook”按钮。在新打开的页面中，找到“Payload URL”中输入ngrok命令窗口中的https地址，“Content type&quot;可以选择&quot;application/json&quot;</code></pre><blockquote>
+<p>此操作的目的是，当仓库有代码提交时，github会向此webhook地址发送请求，通知jenkins构建</p>
+</blockquote>
+<h2 id="七-jenkins配置Server"><a href="#七-jenkins配置Server" class="headerlink" title="七.jenkins配置Server"></a><strong>七.jenkins配置Server</strong></h2><h3 id="nbsp-nbsp-1-Github-Server：名称自己设定；API-URL，固定设置为“https-api-github-com”"><a href="#nbsp-nbsp-1-Github-Server：名称自己设定；API-URL，固定设置为“https-api-github-com”" class="headerlink" title="&nbsp;&nbsp; 1.Github Server：名称自己设定；API URL，固定设置为“https://api.github.com”"></a>&nbsp;&nbsp; 1.Github Server：名称自己设定；API URL，固定设置为“<a href="https://api.github.com”" target="_blank" rel="noopener">https://api.github.com”</a></h3><h3 id="nbsp-nbsp-2-点击“添加”按钮，选择jenkins。"><a href="#nbsp-nbsp-2-点击“添加”按钮，选择jenkins。" class="headerlink" title="&nbsp;&nbsp; 2.点击“添加”按钮，选择jenkins。"></a>&nbsp;&nbsp; 2.点击“添加”按钮，选择jenkins。</h3><h3 id="nbsp-nbsp-3-在类型里，选择“Secret-text”，然后将步骤一种的token复制到“Secret”表单里，填写描述，点击“添加”按钮"><a href="#nbsp-nbsp-3-在类型里，选择“Secret-text”，然后将步骤一种的token复制到“Secret”表单里，填写描述，点击“添加”按钮" class="headerlink" title="&nbsp;&nbsp; 3.在类型里，选择“Secret text”，然后将步骤一种的token复制到“Secret”表单里，填写描述，点击“添加”按钮"></a>&nbsp;&nbsp; 3.在类型里，选择“Secret text”，然后将步骤一种的token复制到“Secret”表单里，填写描述，点击“添加”按钮</h3><h3 id="nbsp-nbsp-4-在凭证里，选择刚才创建的token（通过上一步的描述文本进行选择）"><a href="#nbsp-nbsp-4-在凭证里，选择刚才创建的token（通过上一步的描述文本进行选择）" class="headerlink" title="&nbsp;&nbsp; 4.在凭证里，选择刚才创建的token（通过上一步的描述文本进行选择）"></a>&nbsp;&nbsp; 4.在凭证里，选择刚才创建的token（通过上一步的描述文本进行选择）</h3><h3 id="nbsp-nbsp-5-点击“连接测试”按钮，查看是否能够连接到github"><a href="#nbsp-nbsp-5-点击“连接测试”按钮，查看是否能够连接到github" class="headerlink" title="&nbsp;&nbsp; 5.点击“连接测试”按钮，查看是否能够连接到github"></a>&nbsp;&nbsp; 5.点击“连接测试”按钮，查看是否能够连接到github</h3><h2 id="八-jenkins创建新项目"><a href="#八-jenkins创建新项目" class="headerlink" title="八.jenkins创建新项目"></a><strong>八.jenkins创建新项目</strong></h2><h3 id="nbsp-nbsp-1-在jenkins首页点击“新建item”"><a href="#nbsp-nbsp-1-在jenkins首页点击“新建item”" class="headerlink" title="&nbsp;&nbsp; 1.在jenkins首页点击“新建item”"></a>&nbsp;&nbsp; 1.在jenkins首页点击“新建item”</h3><h3 id="nbsp-nbsp-2-输入任务名称，点击“Freestyle-project”-然后点击下面的“确定”按钮"><a href="#nbsp-nbsp-2-输入任务名称，点击“Freestyle-project”-然后点击下面的“确定”按钮" class="headerlink" title="&nbsp;&nbsp; 2.输入任务名称，点击“Freestyle project”,然后点击下面的“确定”按钮"></a>&nbsp;&nbsp; 2.输入任务名称，点击“Freestyle project”,然后点击下面的“确定”按钮</h3><h3 id="nbsp-nbsp-3-点击“源码管理”，选择“Git”，然后在Repositories配置选项中，输入“Repository-URL”，该url就是步骤二中创建的Github仓库的地址"><a href="#nbsp-nbsp-3-点击“源码管理”，选择“Git”，然后在Repositories配置选项中，输入“Repository-URL”，该url就是步骤二中创建的Github仓库的地址" class="headerlink" title="&nbsp;&nbsp; 3.点击“源码管理”，选择“Git”，然后在Repositories配置选项中，输入“Repository URL”，该url就是步骤二中创建的Github仓库的地址"></a>&nbsp;&nbsp; 3.点击“源码管理”，选择“Git”，然后在Repositories配置选项中，输入“Repository URL”，该url就是步骤二中创建的Github仓库的地址</h3><h3 id="nbsp-nbsp-4-Credentials，创建一个Credentials，类型选择“Username-with-password”，Username输入GitHub账号，Password输入GitHub密码"><a href="#nbsp-nbsp-4-Credentials，创建一个Credentials，类型选择“Username-with-password”，Username输入GitHub账号，Password输入GitHub密码" class="headerlink" title="&nbsp;&nbsp; 4.Credentials，创建一个Credentials，类型选择“Username with password”，Username输入GitHub账号，Password输入GitHub密码"></a>&nbsp;&nbsp; 4.Credentials，创建一个Credentials，类型选择“Username with password”，Username输入GitHub账号，Password输入GitHub密码</h3><h3 id="nbsp-nbsp-5-源码库浏览器选择“githubweb”"><a href="#nbsp-nbsp-5-源码库浏览器选择“githubweb”" class="headerlink" title="&nbsp;&nbsp; 5.源码库浏览器选择“githubweb”"></a>&nbsp;&nbsp; 5.源码库浏览器选择“githubweb”</h3><h3 id="nbsp-nbsp-6-“构建触发器”中勾选”GitHub-hook-trigger-for-GiTScm-polling”"><a href="#nbsp-nbsp-6-“构建触发器”中勾选”GitHub-hook-trigger-for-GiTScm-polling”" class="headerlink" title="&nbsp;&nbsp; 6.“构建触发器”中勾选”GitHub hook trigger for GiTScm polling”"></a>&nbsp;&nbsp; 6.“构建触发器”中勾选”GitHub hook trigger for GiTScm polling”</h3><h3 id="nbsp-nbsp-7-构建环境选择“Provide-Node-amp-npm-bin-folder-to-PATH”，然后选择NodeJS-Installation的版本"><a href="#nbsp-nbsp-7-构建环境选择“Provide-Node-amp-npm-bin-folder-to-PATH”，然后选择NodeJS-Installation的版本" class="headerlink" title="&nbsp;&nbsp; 7.构建环境选择“Provide Node &amp; npm bin/ folder to PATH”，然后选择NodeJS Installation的版本"></a>&nbsp;&nbsp; 7.构建环境选择“Provide Node &amp; npm bin/ folder to PATH”，然后选择NodeJS Installation的版本</h3><h3 id="nbsp-nbsp-8-在构建中，点击“增加构建步骤”，选择“Execute-Windows-Batch-command”，然后输入“npm-install”；重复上面操作，再输入“npm-run-lint”"><a href="#nbsp-nbsp-8-在构建中，点击“增加构建步骤”，选择“Execute-Windows-Batch-command”，然后输入“npm-install”；重复上面操作，再输入“npm-run-lint”" class="headerlink" title="&nbsp;&nbsp; 8.在构建中，点击“增加构建步骤”，选择“Execute Windows Batch command”，然后输入“npm install”；重复上面操作，再输入“npm run lint”"></a>&nbsp;&nbsp; 8.在构建中，点击“增加构建步骤”，选择“Execute Windows Batch command”，然后输入“npm install”；重复上面操作，再输入“npm run lint”</h3><pre><code>总结：在本地提交代码到github，然后查看jenkins的构建过程</code></pre>
       
 
       
