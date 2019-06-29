@@ -152,6 +152,176 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-render函数的的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/yinyukang/2019/06/29/render函数的的使用/">render函数的的使用</a>
+    </h1>
+  
+
+        
+        <a href="/yinyukang/2019/06/29/render函数的的使用/" class="archive-article-date">
+  	<time datetime="2019-06-29T00:38:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="render函数中的-scopedSlots"><a href="#render函数中的-scopedSlots" class="headerlink" title="render函数中的$scopedSlots"></a>render函数中的$scopedSlots</h2><p> <strong>一、在render函数中使用$scopedSlot时，需要和组件使用结合起来看</strong></p>
+<h3 id="1-先看代码："><a href="#1-先看代码：" class="headerlink" title="1.先看代码："></a>1.先看代码：</h3><p>代码一：组件的使用<br>`<detailrender :data="obj"><br>    &lt;template v-slot:</detailrender></p>
+<blockquote>
+<p>nationality=”{ value }”&gt;‘world’<template><br>     <template v-slot:name="{ value }"><br>    ‘hello’</template><br>    `</template></p>
+</blockquote>
+<p>代码段二：作用域插槽的定义</p>
+<p><code>h(
+            &quot;span&quot;,
+            this.$scopedSlots[item.name]
+              ? this.$scopedSlots[item.name]({
+                  value: item.value
+                })
+              : item.value
+          )</code></p>
+<p>代码段三：绑定的数据结构<br><code>data() {
+    return {
+      obj: [
+        { name: &quot;name&quot;, label: &quot;姓名:&quot;, value: &quot;yinyukang&quot;, span: 12 },
+        { name: &quot;age&quot;, label: &quot;年龄:&quot;, value: null, span: 24 },
+        { name: &quot;nationality&quot;, label: &quot;国籍:&quot;, value: &quot;中国&quot;, span: 24 },
+        { name: &quot;education&quot;, label: &quot;学历:&quot;, value: &quot;硕士研究生&quot;, span: 12 }
+      ]
+    }
+  }</code></p>
+<h3 id="2-先打印看下-scopedSlots中都保存了什么"><a href="#2-先打印看下-scopedSlots中都保存了什么" class="headerlink" title="2.先打印看下$scopedSlots中都保存了什么"></a>2.先打印看下$scopedSlots中都保存了什么</h3><p><img src="data:image/png;base64,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" alt="$scopedSlots"></p>
+<blockquote>
+<p>可以看出$scopedSlots中只包含了在组件(代码片段一)使用中绑定的作用域插槽name和nationality</p>
+</blockquote>
+<h3 id="三、结论"><a href="#三、结论" class="headerlink" title="三、结论"></a>三、结论</h3><pre><code>所以在render函数中使用$scopedSlots时需要判断当前$scopedSlots是否包含定义的函数，
+否则会报 _this2.$scopedSlots[item.name] is not a function 的错误</code></pre><p><code>render(&#39;span&#39;,this.$scopedSlots[item.name] &amp;&amp; this.$scopedSlots[item.name]({value:item.value}))</code></p>
+<p>或者</p>
+<p> <code>render(&#39;span&#39;,this.$scopedSlots[item.name] ? this.$scopedSlots[item.name]({value:item.value})) : item.value</code></p>
+<h3 id="四、解释render函数中-scopedSlots的语法"><a href="#四、解释render函数中-scopedSlots的语法" class="headerlink" title="四、解释render函数中$scopedSlots的语法"></a>四、解释render函数中$scopedSlots的语法</h3><p><code>h(
+            &quot;span&quot;,
+            this.$scopedSlots[item.name]
+              ? this.$scopedSlots[item.name]({
+                  value: item.value
+                })
+              : item.value
+          )</code></p>
+<p><code>&lt;slot :name=&quot;item.name&quot; v-bind:value=&quot;item.value&quot;&gt;&lt;/slot&gt;&lt;/span
+        &gt;</code></p>
+<p><strong>通过render和template的定义可以得出：</strong></p>
+<p>1.this.$scopedSlots[item.name]的item.name 指的是插槽的名称</p>
+<p>2.函数的参数的value指的是绑定在动态作用域上的变量名</p>
+<p>3.item.value:指的是默认值</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/yinyukang/2019/06/29/render函数的的使用/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-vue-element-admin源码解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/yinyukang/2019/06/28/vue-element-admin源码解析/">vue-element-admin源码解析</a>
+    </h1>
+  
+
+        
+        <a href="/yinyukang/2019/06/28/vue-element-admin源码解析/" class="archive-article-date">
+  	<time datetime="2019-06-28T02:35:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/yinyukang/2019/06/28/vue-element-admin源码解析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-windows本地整合jenkins和github" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
