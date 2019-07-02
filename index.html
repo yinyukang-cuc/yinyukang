@@ -152,6 +152,95 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-element-ui的validate" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/yinyukang/2019/07/02/element-ui的validate/">element-ui的validate和validator</a>
+    </h1>
+  
+
+        
+        <a href="/yinyukang/2019/07/02/element-ui的validate/" class="archive-article-date">
+  	<time datetime="2019-07-02T12:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><pre><code>表单使用了element-ui的el-form，在表单提交的时候，使用了validate方法进行校验。但是今天在提交的时候，无论如何都不执行validate函数。  
+最终，只能一个字段一个字段的排查，终于发现了问题的根源——validator</code></pre><h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><pre>
+certificateNumber: [
+  {
+    required: true,
+    message: '请输入证件号码',
+    trigger: 'blur',
+  },  
+  {
+    validator: (rule, value, callback) => {
+      if (this.form.certificateType === 1) {
+        // 如果选择身份证
+        let regExp = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/
+        if (!regExp.test(value)) {
+          callback(new Error('请输入正确的身份证号'))
+        }
+      }
+      callback() // 很关键
+    },
+    trigger: 'blur',
+  },
+],
+</pre>
+
+<blockquote>
+<p>通常我们可以通过validator来定义表单的校验规则，切记不能忘记callback()调用，否则this.$refs.form.validate函数不会执行</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/yinyukang/2019/07/02/element-ui的validate/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Object-defineProperty" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
