@@ -152,6 +152,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Object-defineProperty" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/yinyukang/2019/07/02/Object-defineProperty/">Object.defineProperty</a>
+    </h1>
+  
+
+        
+        <a href="/yinyukang/2019/07/02/Object-defineProperty/" class="archive-article-date">
+  	<time datetime="2019-07-02T03:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-基本语法："><a href="#1-基本语法：" class="headerlink" title="1.基本语法："></a>1.基本语法：</h3><p><code>Object.defineProperty(obj,name,{value:undefined,get:undefined,set:undefined,configurable:false,writable:false,enumerable:false})</code></p>
+<h3 id="2-configurable和writable的关系"><a href="#2-configurable和writable的关系" class="headerlink" title="2.configurable和writable的关系"></a>2.configurable和writable的关系</h3><p>1.二者都是false，属性是不允许重新赋值</p>
+<p>2.二者其中有一个是true，则可以对属性进行重新定义属性值</p>
+<p>例一：  </p>
+<p> <code>Object.defineProperty(Person, &quot;name&quot;, {
+      value: &quot;jack&quot;,
+      configurable: false,
+      writable: true
+    });</code></p>
+<p> <code>Object.defineProperty(Person, &quot;name&quot;, {
+      value: &quot;owen&quot;
+    });</code></p>
+<p>例二：  </p>
+<p> <code>Object.defineProperty(Person, &quot;name&quot;, {
+      value: &quot;jack&quot;,
+      configurable: true,
+      writable: false
+    });</code></p>
+<p>  <code>Object.defineProperty(Person, &quot;name&quot;, {
+      value: &quot;owen&quot;
+    });</code></p>
+<p>例三：</p>
+<p>如果writable是false，则不允许通过“=”进行重新赋值</p>
+<p><code>Object.defineProperty(Person, &quot;name&quot;, {
+      value: &quot;jack&quot;,
+      configurable: true,
+      writable: false
+    });</code></p>
+<p> Person.name = “rose” // 会报错</p>
+<h3 id="3-利用configurable和writable都为false，可以创建常量"><a href="#3-利用configurable和writable都为false，可以创建常量" class="headerlink" title="3.利用configurable和writable都为false，可以创建常量"></a>3.利用configurable和writable都为false，可以创建常量</h3><h3 id="4-禁止扩展-但是允许Object-defineProperty对已有的属性进行重新配置"><a href="#4-禁止扩展-但是允许Object-defineProperty对已有的属性进行重新配置" class="headerlink" title="4.禁止扩展,但是允许Object.defineProperty对已有的属性进行重新配置"></a>4.禁止扩展,但是允许Object.defineProperty对已有的属性进行重新配置</h3><pre><code>`Object.preventExtensions(Person)`</code></pre><h3 id="5-Object-seal-lt-gt-Object-preventExtensions-configurable-false"><a href="#5-Object-seal-lt-gt-Object-preventExtensions-configurable-false" class="headerlink" title="5.Object.seal() &lt;=&gt; Object.preventExtensions + configurable:false"></a>5.Object.seal() &lt;=&gt; Object.preventExtensions + configurable:false</h3><h3 id="6-Object-freeze-Person-不可重新配置，不可以修改已有属性（最高级不可变性）"><a href="#6-Object-freeze-Person-不可重新配置，不可以修改已有属性（最高级不可变性）" class="headerlink" title="6.Object.freeze(Person)  不可重新配置，不可以修改已有属性（最高级不可变性）"></a>6.Object.freeze(Person)  不可重新配置，不可以修改已有属性（最高级不可变性）</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/yinyukang/2019/07/02/Object-defineProperty/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-render函数的的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
