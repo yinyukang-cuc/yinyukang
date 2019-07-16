@@ -8,14 +8,17 @@
   <link rel="dns-prefetch" href="https://yinyukang-cuc.github.io">
   <title>vue-element-admin源码解析 | yinyukang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="项目目录结构 build config src api：请求api封装 article:增删改查 login：登录、登出、获取用户信息 qiniu: 获取token remoteSearch: 根据用户名搜索用户 transaction：事务     assets: 图片资源+字体+css（主题） 401 图片 404 图片 custom-theme:定制主题   components：自定义公共">
+<meta property="og:type" content="article">
 <meta property="og:title" content="vue-element-admin源码解析">
 <meta property="og:url" content="https://yinyukang-cuc.github.io/2019/06/28/vue-element-admin源码解析/index.html">
 <meta property="og:site_name" content="yinyukang">
+<meta property="og:description" content="项目目录结构 build config src api：请求api封装 article:增删改查 login：登录、登出、获取用户信息 qiniu: 获取token remoteSearch: 根据用户名搜索用户 transaction：事务     assets: 图片资源+字体+css（主题） 401 图片 404 图片 custom-theme:定制主题   components：自定义公共">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-28T02:35:52.849Z">
+<meta property="og:updated_time" content="2019-07-03T06:37:59.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue-element-admin源码解析">
+<meta name="twitter:description" content="项目目录结构 build config src api：请求api封装 article:增删改查 login：登录、登出、获取用户信息 qiniu: 获取token remoteSearch: 根据用户名搜索用户 transaction：事务     assets: 图片资源+字体+css（主题） 401 图片 404 图片 custom-theme:定制主题   components：自定义公共">
   
     <link rel="alternative" href="/atom.xml" title="yinyukang" type="application/atom+xml">
   
@@ -171,7 +174,254 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="项目目录结构"><a href="#项目目录结构" class="headerlink" title="项目目录结构"></a>项目目录结构</h2><ul>
+<li>build</li>
+<li>config</li>
+<li>src<ul>
+<li>api：请求api封装<ul>
+<li>article:增删改查</li>
+<li>login：登录、登出、获取用户信息</li>
+<li>qiniu: 获取token</li>
+<li>remoteSearch: 根据用户名搜索用户</li>
+<li>transaction：事务  </li>
+</ul>
+</li>
+<li>assets: 图片资源+字体+css（主题）<ul>
+<li>401 图片</li>
+<li>404 图片</li>
+<li>custom-theme:定制主题</li>
+</ul>
+</li>
+<li>components：自定义公共组件<ul>
+<li>BackToTop: 置顶</li>
+<li>Breadcrumb: 面包屑</li>
+<li>Charts：图表</li>
+<li>DndList: 穿梭框</li>
+<li>DragSelect：拖拽下拉</li>
+<li>Dropzone: 拖放</li>
+<li>ErrorLog：错误日志</li>
+<li>GithubCorner：github</li>
+<li>Hamburger:</li>
+<li>ImageCropper: 图片剪切</li>
+<li>JsonEditor: json编辑</li>
+<li>Kanban：</li>
+<li>LangSelect：语言选择</li>
+<li>MarkdownEditor：markdonw编辑</li>
+<li>MDinput</li>
+<li>Pagination: 分页</li>
+<li>PanThumb:</li>
+<li>Screenfull: 全屏</li>
+<li>ScrollPane: 滚动面板</li>
+<li>share：分享</li>
+<li>SizeSelect：</li>
+<li>sticky：顶灯效果</li>
+<li>SvgIcon： svg自定义图标</li>
+<li>TextHoverEffect：文字悬浮效果</li>
+<li>ThemePicker:</li>
+<li>Tinymce</li>
+<li>TreeTable</li>
+<li>upload</li>
+<li>uploadExcel</li>
+</ul>
+</li>
+<li>directive<ul>
+<li>剪切板</li>
+<li>拖拽dialog</li>
+<li>权限</li>
+<li>waves</li>
+<li>stick.js</li>
+</ul>
+</li>
+<li>filters<ul>
+<li>时间格式过滤器</li>
+</ul>
+</li>
+<li>icons<ul>
+<li>自定义svg图标</li>
+</ul>
+</li>
+<li>lang<ul>
+<li>英文、中文</li>
+</ul>
+</li>
+<li>mock<ul>
+<li>article</li>
+<li>index.js</li>
+<li>login.js</li>
+<li>remoteSearch.js</li>
+<li>transaction.js</li>
+</ul>
+</li>
+<li>router<ul>
+<li>modules<ul>
+<li>charts.js</li>
+<li>components.js</li>
+<li>nested.js</li>
+<li>table.js</li>
+</ul>
+</li>
+<li>index.js</li>
+</ul>
+</li>
+<li>store<ul>
+<li>modules<ul>
+<li>app.js</li>
+<li>errorLog.js</li>
+<li>permission.js</li>
+<li>tagsView.js</li>
+</ul>
+</li>
+<li>getters.js</li>
+<li>index.js</li>
+</ul>
+</li>
+<li>styles<ul>
+<li>btn.scss</li>
+<li>element-ui.scss</li>
+<li>index.scss</li>
+<li>mixin.scss</li>
+<li>sidebar.scss</li>
+<li>transition.scss</li>
+<li>variables.scss</li>
+</ul>
+</li>
+<li>utils<ul>
+<li>auth.js</li>
+<li>clipboard.js</li>
+<li>createUniqueString.js</li>
+<li>i18n.js</li>
+<li>index.js</li>
+<li>openWindiows.js</li>
+<li>permission.js</li>
+<li>request.js</li>
+<li>scrollTo.js</li>
+<li>validate.js</li>
+</ul>
+</li>
+<li>vendor</li>
+<li>views<ul>
+<li>视图</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>static</li>
+</ul>
+<h2 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h2><p>页面– src/views/login/index.vue<br>api – src/api/login</p>
+<pre><code>handleLogin：
+    1.表单校验
+    2.dispatch(&apos;loginByUserName&apos;,this.loginForm) // 返回promise
+        -- 成功跳转到 this.redirect 或者 /（首页）
+            - 关于this.redirect:
+            this.redirect = route.query &amp;&amp; route.query.redirect
+            - loginByUserName:store/modules/user.js
+               1.将usename进行trim()处理
+               2.返回一个Promise
+               3.调用src/api/login-&gt;loginByUsername
+                 ajax请求成功后，将返回的token存放到state的&apos;SET_TOKEN&apos;中
+               4.调用src/utils/auth-&gt;setToken,将token保存到cookies(js-cookie)中，截止时间是浏览器关闭
+               5.
+        -- 失败：停留在当前页</code></pre><h2 id="路由搭建"><a href="#路由搭建" class="headerlink" title="路由搭建"></a>路由搭建</h2><p>路由配置：src/router/index.js  </p>
+<ul>
+<li><p>export const constantRouterMap  </p>
+</li>
+<li><p>  1.redirect:  </p>
+<pre><code>path:&apos;/redirect&apos;,  
+
+ hidden:true,  
+
+ component:Layout,  
+
+ children: path:&apos;/redirect/:path*&apos; 动态路由参数的正则表达式  
+
+ component: src/views/redirect/index</code></pre><p>   2.login:’/login’</p>
+<pre><code>  hidden:true  
+3.auth-redirect:&apos;/auth-redirect&apos;
+  hidden:true</code></pre><p>   4.404:’/404’,</p>
+<pre><code>hidden:true</code></pre><p>   5.401:’/401’,</p>
+<pre><code>hidden:true</code></pre><p>   6.’’ : ‘’ // 布局</p>
+<pre><code>  path：&apos;&apos;,
+  component:Layout,
+  redirec:&apos;dashboard&apos;,
+  children:[{
+      path:&apos;dashboard&apos;,
+      component:() =&gt; import(&apos;@/views/dashborard/index&apos;)
+      name:&apos;Dashboard&apos;,
+      meta:{title:&apos;dashboard&apos;,icon:&apos;dashboard&apos;,noCache:true}
+  }]    
+7. &apos;edit/:id(\\d+)&apos;
+8. {
+     path:&apos;*&apos;,redirect:&apos;/404&apos;,hidden:true
+   }</code></pre></li>
+<li><p>export const asyncRouterMap</p>
+</li>
+<li><p>new Router({routes:constantRouterMap})</p>
+</li>
+</ul>
+<blockquote>
+<p>总结：<br>1.在路由的配置中，增加了hidden属性<br>2.meta中保存了title，icon，noCache属性的设置<br>3.在asyncRouterMap中的meta中增加了roles：[‘admin’,’editor’]  </p>
+<ol start="4">
+<li>最后添加 path:’*’</li>
+</ol>
+</blockquote>
+<h2 id="路由跳转的权限控制"><a href="#路由跳转的权限控制" class="headerlink" title="路由跳转的权限控制"></a>路由跳转的权限控制</h2><p>权限控制：src/permission.js</p>
+<p>1.hasPermission(roles,permissionRoles):  </p>
+<pre><code>1.如果roles里包含admin，则总是返回true，具有全部权限
+2.如果权限列表（permissionRoles）为空，则返回true
+3.判断roles中的某些权限是否在permissionRoles中</code></pre><p>2.创建白名单：  </p>
+<pre><code>whilteList</code></pre><p>3.beforeEach 搭建权限</p>
+<ul>
+<li>从cookie中获取到token</li>
+<li>如果没有cookie，则判断to.path是否在白名单里，在白名单则直接跳转；如果不在，则跳转到登录页，并带上redirect参数，以便登录成功后再跳转到之前的页面；</li>
+<li>如果cookie存在token，再判断如果是登录，则回到首页；不是首页，则再判断用户信息。  <ul>
+<li>如果本地没有用户角色信息：  <ul>
+<li>获取用户信息dispatch(‘GetUserInfo’)–src/store/modules/user.js, return new Promise() ,根据state中保存的token，获取请求用户信息，获取到后，将数据commit(‘SET_ROLES’)中，并将数据resolve(response)。<ul>
+<li>获取到用户信息后，根据数据动态生成路由，dispatch(‘GenerateRoutes’)–src/store/modules/permission.js, 如果是角色列表中包含admin，则返回全部的asyncRouterMap，否则根据roles，来过滤有权限的路由。最后将有权限的路由配置存放到commit(‘SET_ROUTES’)。</li>
+</ul>
+</li>
+<li>在路由配置部分的meta的roles会用在路由权限过滤，如果路由配置中没有roles，则默认该路由具有权限。</li>
+<li>从vuex中获取具有权限的路由配置信息，调用router.addRoutes(store.getters.addRouters),生成当前路由信息</li>
+<li>如果生成路由失败，则执行登出操作，并跳转到首页（应该到了登录页）<ul>
+<li>如果本地有用户角色信息</li>
+</ul>
+</li>
+<li>判断to.meta.roles是否在本地用户角色中，如果存在，则跳转到to.path,否则跳转到401 <blockquote>
+<p>总结：<br>1.用户信息的数据结构：</p>
+<pre>data:{
+avatar:"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+introduction:"我是超级管理员",
+name:"Super Admin",
+roles:["admin"],
+token:'admin'
+}
+</pre>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="页面权限控制"><a href="#页面权限控制" class="headerlink" title="页面权限控制"></a>页面权限控制</h2><p>  页面权限自定义指令：src/directive/permission/permission.js</p>
+<ul>
+<li>从binding中解析出value（array）– permissionRoles  </li>
+<li>从vuex中获取用户的角色数组 roles</li>
+<li>判断value是否是数组<ul>
+<li>如果是<ul>
+<li>判断permissionRoles中是否包含roles中的某一个</li>
+<li>如果没有权限，则通过el.parentNode.removeChild(el)删除掉整个html</li>
+</ul>
+</li>
+<li>如果部署，抛出错误异常 </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>1.某些情况下不适合使用v-permission=”[‘admin’]”,例如，element-ui的tab组件或el-table-column以及其他动态渲染dom的场景，只能通过v-if来实现<br>2.v-if=”checkPermission(‘admin’)”: 定义位置src/utils/permission.js</p>
+</blockquote>
+<h2 id="页面布局和左侧菜单栏配置"><a href="#页面布局和左侧菜单栏配置" class="headerlink" title="页面布局和左侧菜单栏配置"></a>页面布局和左侧菜单栏配置</h2><p>菜单配置项：  </p>
+<p>在路由配置中，有hidden:true, redirect:’/permission/index’,alwaysShow:true</p>
+
       
 
       

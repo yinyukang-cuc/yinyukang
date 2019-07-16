@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yinyukang-cuc.github.io">
-  <title>Archives | yinyukang</title>
+  <title>vue keep-alive 和 scrollBehavior | yinyukang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="yinyukang">
-<meta property="og:url" content="https://yinyukang-cuc.github.io/archives/index.html">
+  <meta name="description" content="今天在搭建路由之后，从首页进入到详情页，页面跳转进去之后滚动条在页面底部。由于在首页进行点击时，滚动条已经在底部了，对单页面应用来说，在路由切换之后，滚动条是不会变的，因为滚动条是window的。然后想到了使用vue-router的scrollBehavior。另外，对于缓存又想到了使用keep-alive。但由于不是很熟悉，因此，在本地都联系了下。  keep-alive 原理：keep-al">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue keep-alive 和 scrollBehavior">
+<meta property="og:url" content="https://yinyukang-cuc.github.io/2019/07/16/vue-keep-alive-和-scrollBehavior/index.html">
 <meta property="og:site_name" content="yinyukang">
+<meta property="og:description" content="今天在搭建路由之后，从首页进入到详情页，页面跳转进去之后滚动条在页面底部。由于在首页进行点击时，滚动条已经在底部了，对单页面应用来说，在路由切换之后，滚动条是不会变的，因为滚动条是window的。然后想到了使用vue-router的scrollBehavior。另外，对于缓存又想到了使用keep-alive。但由于不是很熟悉，因此，在本地都联系了下。  keep-alive 原理：keep-al">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-16T09:27:17.641Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yinyukang">
+<meta name="twitter:title" content="vue keep-alive 和 scrollBehavior">
+<meta name="twitter:description" content="今天在搭建路由之后，从首页进入到详情页，页面跳转进去之后滚动条在页面底部。由于在首页进行点击时，滚动条已经在底部了，对单页面应用来说，在路由切换之后，滚动条是不会变的，因为滚动条是window的。然后想到了使用vue-router的scrollBehavior。另外，对于缓存又想到了使用keep-alive。但由于不是很熟悉，因此，在本地都联系了下。  keep-alive 原理：keep-al">
   
     <link rel="alternative" href="/atom.xml" title="yinyukang" type="application/atom+xml">
   
@@ -150,265 +154,184 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-vue-keep-alive-和-scrollBehavior" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      vue keep-alive 和 scrollBehavior
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/yinyukang/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/" class="archive-article-date">
+
+        
+        <a href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/" class="archive-article-date">
   	<time datetime="2019-07-16T08:58:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/">vue keep-alive 和 scrollBehavior</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>今天在搭建路由之后，从首页进入到详情页，页面跳转进去之后滚动条在页面底部。由于<strong>在首页进行点击时，滚动条已经在底部了</strong>，对单页面应用来说，在路由切换之后，滚动条是不会变的，因为滚动条是<strong>window</strong>的。然后想到了使用vue-router的scrollBehavior。另外，对于缓存又想到了使用keep-alive。但由于不是很熟悉，因此，在本地都联系了下。</p>
+</blockquote>
+<h2 id="keep-alive"><a href="#keep-alive" class="headerlink" title="keep-alive"></a>keep-alive</h2><blockquote>
+<p>原理：keep-alive（不会渲染到页面）要求<strong>同时</strong>只有一个子组件.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const vnode: VNode = getFirstComponentChild(this.$slots.default)</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>keep-alive对里面的组件进行了缓存。下次访问该组件，不会重新创建，会直接使用缓存中的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.cache = Object.create(null)</span><br></pre></td></tr></table></figure>
 
+<p>所有组件都会存放到this.cache中，因此，存储太多了，会影响性能。所以，在vue2.5.5中增加了max属性。</p>
+<blockquote>
+<p>注意的问题：使用很简单。但是对组件的缓存会导致ajax不会重新请求。但是vue提供了另外两个钩子函数，<strong>activated和deactivated</strong></p>
+</blockquote>
+<p>放在keep-alive中的组件的ajax请求要放在activated钩子函数中。</p>
+<p>页面触发的顺序：created-&gt;mounted-&gt;activated,退出时触发deactivated,但是再次进入时，只会触发<strong>activated</strong></p>
+<blockquote>
+<p>另外，include和exclude属性可以到官方网站查看，非常详细：<a href="https://cn.vuejs.org/v2/api/#keep-alive" target="_blank" rel="noopener">https://cn.vuejs.org/v2/api/#keep-alive</a></p>
+</blockquote>
+<h2 id="scrollBehavior"><a href="#scrollBehavior" class="headerlink" title="scrollBehavior"></a>scrollBehavior</h2><blockquote>
+<p>vue-router的这个属性使用也非常简单。</p>
+</blockquote>
+<blockquote>
+<p>但是需要和keep-alive进行区别的是。滚动条还是scrollBehavior进行控制的。不是keep-alive。另外，开始使用的时候进行测试，是通过再次点击超链接进入，发现每次savedPosition都是null。官方早有声明，对滚动条的支持，只在支持history.pushState的浏览器中使用，也就意味着，scrollBehavior只在通过浏览器进行切换的时候才起作用，如果是重新通过连接进入，则不会起作用。这就是好多人都觉得该属性没起作用的原因。</p>
+</blockquote>
+<blockquote>
+<p>另外vue-router2.8.0新增了异步滚动的方式。该方式<strong>未进行实际验证</strong>，但有人通过使用它来解决ajax请求导致页面高度变化的问题</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yinyukang-cuc.github.io/2019/07/16/vue-keep-alive-和-scrollBehavior/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/06/函数返回new-Promise/" class="archive-article-date">
-  	<time datetime="2019-07-06T01:09:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/yinyukang/2019/07/06/函数返回new-Promise/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">函数返回new Promise</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/06/函数返回new-Promise/">函数返回new Promise</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/06/ES6汇总/" class="archive-article-date">
-  	<time datetime="2019-07-06T01:06:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/06/ES6汇总/">ES6汇总</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/02/element-ui的validate/" class="archive-article-date">
-  	<time datetime="2019-07-02T12:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/02/element-ui的validate/">element-ui的validate和validator</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/02/Object-defineProperty/" class="archive-article-date">
-  	<time datetime="2019-07-02T03:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/02/Object-defineProperty/">Object.defineProperty</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/29/render函数的的使用/" class="archive-article-date">
-  	<time datetime="2019-06-29T00:38:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/29/render函数的的使用/">render函数的的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/28/vue-element-admin源码解析/" class="archive-article-date">
-  	<time datetime="2019-06-28T02:35:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/28/vue-element-admin源码解析/">vue-element-admin源码解析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/27/windows本地整合jenkins和github/" class="archive-article-date">
-  	<time datetime="2019-06-27T02:13:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/27/windows本地整合jenkins和github/">windows持续集成jenkins和github构建vue</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/27/hello-world/" class="archive-article-date">
-  	<time datetime="2019-06-27T01:32:54.018Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/27/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -431,8 +354,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

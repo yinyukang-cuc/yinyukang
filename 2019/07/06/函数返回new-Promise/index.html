@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yinyukang-cuc.github.io">
-  <title>Archives | yinyukang</title>
+  <title>函数返回new Promise | yinyukang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="yinyukang">
-<meta property="og:url" content="https://yinyukang-cuc.github.io/archives/index.html">
+  <meta name="description" content="最近研究vue-element-admin框架的时候，在获取用户信息的时候会调用vuex的action，在action中函数会返回new Promise,那么在new Promise实例化过程中发起ajax请求，代码的执行顺序是怎样的？带着思考本地跑了下测试代码，总结了这样使用应该注意的事项  store.dispatch(&amp;apos;GetUserInfo&amp;apos;).then(res =&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数返回new Promise">
+<meta property="og:url" content="https://yinyukang-cuc.github.io/2019/07/06/函数返回new-Promise/index.html">
 <meta property="og:site_name" content="yinyukang">
+<meta property="og:description" content="最近研究vue-element-admin框架的时候，在获取用户信息的时候会调用vuex的action，在action中函数会返回new Promise,那么在new Promise实例化过程中发起ajax请求，代码的执行顺序是怎样的？带着思考本地跑了下测试代码，总结了这样使用应该注意的事项  store.dispatch(&amp;apos;GetUserInfo&amp;apos;).then(res =&amp;">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-06T01:25:42.979Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yinyukang">
+<meta name="twitter:title" content="函数返回new Promise">
+<meta name="twitter:description" content="最近研究vue-element-admin框架的时候，在获取用户信息的时候会调用vuex的action，在action中函数会返回new Promise,那么在new Promise实例化过程中发起ajax请求，代码的执行顺序是怎样的？带着思考本地跑了下测试代码，总结了这样使用应该注意的事项  store.dispatch(&amp;apos;GetUserInfo&amp;apos;).then(res =&amp;">
   
     <link rel="alternative" href="/atom.xml" title="yinyukang" type="application/atom+xml">
   
@@ -150,265 +154,230 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-函数返回new-Promise" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/yinyukang/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/" class="archive-article-date">
-  	<time datetime="2019-07-16T08:58:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/">vue keep-alive 和 scrollBehavior</a>
+    <h1 class="article-title" itemprop="name">
+      函数返回new Promise
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/06/函数返回new-Promise/" class="archive-article-date">
+        
+        <a href="/yinyukang/2019/07/06/函数返回new-Promise/" class="archive-article-date">
   	<time datetime="2019-07-06T01:09:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/06/函数返回new-Promise/">函数返回new Promise</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近研究vue-element-admin框架的时候，在<strong>获取用户信息</strong>的时候会调用vuex的action，在action中函数会返回new Promise,那么在new Promise实例化过程中发起ajax请求，代码的执行顺序是怎样的？带着思考本地跑了下测试代码，总结了这样使用应该注意的事项</p>
+</blockquote>
+<pre><code>store.dispatch(&apos;GetUserInfo&apos;).then(res =&gt; { // 拉取user_info
+  const roles = res.data.roles // note: roles must be a array! such as: [&apos;editor&apos;,&apos;develop&apos;]
+  store.dispatch(&apos;GenerateRoutes&apos;, { roles }).then(() =&gt; { // 根据roles权限生成可访问的路由表
+router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+  })
 
-        <div class="article-info info-on-right">
-          
-          
+// 获取用户信息
+GetUserInfo({ commit, state }) {
+  return new Promise((resolve, reject) =&gt; {
+    getUserInfo(state.token).then(response =&gt; {
+          console.log(&apos;userinfo&apos;, response)
+          // 由于mockjs 不支持自定义状态码只能这样hack
+          if (!response.data) {
+            reject(&apos;Verification failed, please login again.&apos;)
+        }
+          const data = response.data
 
+          if (data.roles &amp;&amp; data.roles.length &gt; 0) { // 验证返回的    roles是否是一个非空数组
+            commit(&apos;SET_ROLES&apos;, data.roles)
+         } else {
+            reject(&apos;getInfo: roles must be a non-null array!&apos;)
+          }
+       commit(&apos;SET_NAME&apos;, data.name)
+       commit(&apos;SET_AVATAR&apos;, data.avatar)
+       commit(&apos;SET_INTRODUCTION&apos;, data.introduction)
+       resolve(response)
+    }).catch(error =&gt; {
+      reject(error)
+    })
+  })
+},</code></pre><blockquote>
+<p>在GetUserInfo方法中，会返回new Promise，Promise 实例化的过程会立即执行，会立即发起ajax请求，ajax请求是异步执行</p>
+</blockquote>
+<pre><code>function test(){
+    return new Promise((resolve,reject)=&gt;{
+        console.log(&apos;promise&apos;)
+        setTimeout(function(){
+               console.log(&apos;callback&apos;)
+        },0)
+    })
+}
+test()
+console.log(&apos;end&apos;)
+输出结果：promise
+         end
+         callback</code></pre><blockquote>
+<p>setTimeout是宏任务，因此会在js stack 执行结束后才执行,如何保证函数执行后的执行顺序?</p>
+</blockquote>
+<pre><code>  function test(){
+    return new Promise((resolve,reject)=&gt;{
+        console.log(&apos;promise&apos;)
+        setTimeout(function(){
+            console.log(&apos;callback&apos;)
+            resolve()
+        },0)
+    })
+  }
+test().then(()=&gt;{
+console.log(&apos;end&apos;)
+})</code></pre><blockquote>
+<p>通过resolve进行实现test的链式调用，如果对执行顺序有要求，则后续代码都在then里实现</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yinyukang-cuc.github.io/2019/07/06/函数返回new-Promise/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/06/ES6汇总/" class="archive-article-date">
-  	<time datetime="2019-07-06T01:06:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          vue keep-alive 和 scrollBehavior
+        
+      </div>
+    </a>
+  
+  
+    <a href="/yinyukang/2019/07/06/ES6汇总/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ES6汇总</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/06/ES6汇总/">ES6汇总</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/02/element-ui的validate/" class="archive-article-date">
-  	<time datetime="2019-07-02T12:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/02/element-ui的validate/">element-ui的validate和validator</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/02/Object-defineProperty/" class="archive-article-date">
-  	<time datetime="2019-07-02T03:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/02/Object-defineProperty/">Object.defineProperty</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/29/render函数的的使用/" class="archive-article-date">
-  	<time datetime="2019-06-29T00:38:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/29/render函数的的使用/">render函数的的使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/28/vue-element-admin源码解析/" class="archive-article-date">
-  	<time datetime="2019-06-28T02:35:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/28/vue-element-admin源码解析/">vue-element-admin源码解析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/27/windows本地整合jenkins和github/" class="archive-article-date">
-  	<time datetime="2019-06-27T02:13:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/27/windows本地整合jenkins和github/">windows持续集成jenkins和github构建vue</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/27/hello-world/" class="archive-article-date">
-  	<time datetime="2019-06-27T01:32:54.018Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/27/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -431,8 +400,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
