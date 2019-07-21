@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yinyukang-cuc.github.io">
-  <title>Archives: 2019/7 | yinyukang</title>
+  <title>async+await和new Promise | yinyukang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="yinyukang">
-<meta property="og:url" content="https://yinyukang-cuc.github.io/archives/2019/07/index.html">
+  <meta name="description" content="async+await+new Promise 探索async + await看下返回值第一种情况：直接返回this.$http,返回Promise对象 async mounted() {     let testAsync = await this.asyncTest()     console.log(testAsync, &apos;testAsyc&apos;) // 会打印出来this.asyncTest(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="async+await和new Promise">
+<meta property="og:url" content="https://yinyukang-cuc.github.io/2019/07/21/async-await和new-Promise/index.html">
 <meta property="og:site_name" content="yinyukang">
+<meta property="og:description" content="async+await+new Promise 探索async + await看下返回值第一种情况：直接返回this.$http,返回Promise对象 async mounted() {     let testAsync = await this.asyncTest()     console.log(testAsync, &apos;testAsyc&apos;) // 会打印出来this.asyncTest(">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-21T00:59:03.060Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yinyukang">
+<meta name="twitter:title" content="async+await和new Promise">
+<meta name="twitter:description" content="async+await+new Promise 探索async + await看下返回值第一种情况：直接返回this.$http,返回Promise对象 async mounted() {     let testAsync = await this.asyncTest()     console.log(testAsync, &apos;testAsyc&apos;) // 会打印出来this.asyncTest(">
   
     <link rel="alternative" href="/atom.xml" title="yinyukang" type="application/atom+xml">
   
@@ -150,211 +154,225 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-async-await和new-Promise" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      async+await和new Promise
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/yinyukang/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/21/async-await和new-Promise/" class="archive-article-date">
+
+        
+        <a href="/yinyukang/2019/07/21/async-await和new-Promise/" class="archive-article-date">
   	<time datetime="2019-07-21T00:28:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/21/async-await和new-Promise/">async+await和new Promise</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="async-await-new-Promise-探索"><a href="#async-await-new-Promise-探索" class="headerlink" title="async+await+new Promise 探索"></a>async+await+new Promise 探索</h1><h1 id="async-await看下返回值"><a href="#async-await看下返回值" class="headerlink" title="async + await看下返回值"></a>async + await看下返回值</h1><h2 id="第一种情况：直接返回this-http-返回Promise对象"><a href="#第一种情况：直接返回this-http-返回Promise对象" class="headerlink" title="第一种情况：直接返回this.$http,返回Promise对象"></a>第一种情况：直接返回this.$http,返回Promise对象</h2><pre>
+async mounted() {
+    let testAsync = await this.asyncTest()
+    console.log(testAsync, 'testAsyc') // 会打印出来this.asyncTest()ajax请求的返回值
+    console.log('next')
+  },
 
-        <div class="article-info info-on-right">
-          
-          
+methods:{
+    /**
+    * 异步获取
+    */
+    asyncTest(search) {
+          let param = {}
+          if (search) {
+            // 搜索情况
+            this.dataList = []
+            this.searchQueryAPI = cloneDeep(this.searchQuery)
+            this.pagination.pageIndex = 0
+          }
+          param = Object.assign(param, this.searchQueryAPI, this.pagination) // 分页 + 搜索
+          return  this.$http
+              .post(URL.getSystemAnnounceList, param)
+        },
+    }
+</pre>
 
+<blockquote>
+<p>console:{total: 1, pageNum: 0, data: Array(1), serverTime: 1563669623465} “testAsyc”<br>console:next</p>
+</blockquote>
+<blockquote>
+<p>通过结果可以看出，先打印了ajax的reponse，然后才继续往下执行<br>也就是说，await是等到返回结果以后，才继续往下执行，而不是返回Promise对象就往下执行</p>
+</blockquote>
+<p>通过以下实例进行验证：</p>
+<h2 id="async-await-new-Promise"><a href="#async-await-new-Promise" class="headerlink" title="async+await + new Promise"></a>async+await + new Promise</h2><pre>
+asyncTest(search) {
+      let param = {}
+      if (search) {
+        // 搜索情况
+        this.dataList = []
+        this.searchQueryAPI = cloneDeep(this.searchQuery)
+        this.pagination.pageIndex = 0
+      }
+      param = Object.assign(param, this.searchQueryAPI, this.pagination) // 分页 + 搜索
+      return new Promise((resolve, reject) => {
+        console.log('new Promise')
+        this.$http
+          .post(URL.getSystemAnnounceList, param)
+          .then(res => {
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+</pre>
+
+<blockquote>
+<p>得出的结果,和上面一样<br>因此可以说明，await是等到有返回值，才继续向下执行</p>
+</blockquote>
+<p>注意：</p>
+<p>在以上两种情况的使用上，应该用try{}catch(e){},将wait包裹起来，因为要处理异常情况。</p>
+<pre>
+    try {
+      let testAsync = await this.asyncTest()
+      console.log(testAsync, 'testAsyc') // testAsnc是ajax请求的response
+      console.log('next')
+    } catch (e) {
+      console.log(e, 'e')
+    }
+</pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yinyukang-cuc.github.io/2019/07/21/async-await和new-Promise/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/19/页面中的各种位置和元素大小汇总/" class="archive-article-date">
-  	<time datetime="2019-07-19T06:26:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/yinyukang/2019/07/19/页面中的各种位置和元素大小汇总/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">页面中的各种位置和元素大小汇总</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/19/页面中的各种位置和元素大小汇总/">页面中的各种位置和元素大小汇总</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/" class="archive-article-date">
-  	<time datetime="2019-07-16T08:58:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/16/vue-keep-alive-和-scrollBehavior/">vue keep-alive 和 scrollBehavior</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/06/函数返回new-Promise/" class="archive-article-date">
-  	<time datetime="2019-07-06T01:09:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/06/函数返回new-Promise/">函数返回new Promise</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/06/ES6汇总/" class="archive-article-date">
-  	<time datetime="2019-07-06T01:06:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/06/ES6汇总/">ES6汇总</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/02/element-ui的validate/" class="archive-article-date">
-  	<time datetime="2019-07-02T12:20:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/02/element-ui的validate/">element-ui的validate和validator</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/07/02/Object-defineProperty/" class="archive-article-date">
-  	<time datetime="2019-07-02T03:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/07/02/Object-defineProperty/">Object.defineProperty</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -377,8 +395,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
