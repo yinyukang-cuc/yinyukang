@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="yinyukang">
 <meta property="og:description" content="项目目录结构 build config src api：请求api封装 article:增删改查 login：登录、登出、获取用户信息 qiniu: 获取token remoteSearch: 根据用户名搜索用户 transaction：事务     assets: 图片资源+字体+css（主题） 401 图片 404 图片 custom-theme:定制主题   components：自定义公共">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-03T06:37:59.046Z">
+<meta property="og:updated_time" content="2019-07-24T03:34:35.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue-element-admin源码解析">
 <meta name="twitter:description" content="项目目录结构 build config src api：请求api封装 article:增删改查 login：登录、登出、获取用户信息 qiniu: 获取token remoteSearch: 根据用户名搜索用户 transaction：事务     assets: 图片资源+字体+css（主题） 401 图片 404 图片 custom-theme:定制主题   components：自定义公共">
@@ -421,6 +421,9 @@ token:'admin'
 </blockquote>
 <h2 id="页面布局和左侧菜单栏配置"><a href="#页面布局和左侧菜单栏配置" class="headerlink" title="页面布局和左侧菜单栏配置"></a>页面布局和左侧菜单栏配置</h2><p>菜单配置项：  </p>
 <p>在路由配置中，有hidden:true, redirect:’/permission/index’,alwaysShow:true</p>
+<h2 id="路由分类："><a href="#路由分类：" class="headerlink" title="路由分类："></a>路由分类：</h2><p>1) 在菜单列表中展示</p>
+<p>2) 属于左侧菜单栏的子路由，但在菜单栏中不展示出来</p>
+<p>3) 不属于左侧菜单栏的子路由，也不在菜单栏中展示出来</p>
 
       
 

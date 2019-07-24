@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://yinyukang-cuc.github.io">
-  <title>Archives: 2019 | yinyukang</title>
+  <title>lodash assign,extend,merge | yinyukang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="yinyukang">
-<meta property="og:url" content="https://yinyukang-cuc.github.io/archives/2019/page/2/index.html">
+  <meta name="description" content="lodash的对象合并方法的区别assign assignIn assignWith assignInWithassign 将原对象上的可枚举属性并且是hasOwnProperty(prop)为true的属性，复制到目标对象上（注意是浅拷贝）覆盖方式，右边的source的属性会覆盖左边的；target没有的属性，也会被添加进去  assignIn 将原对象上的可枚举属性，并且会将原型链上的属性复制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lodash assign,extend,merge">
+<meta property="og:url" content="https://yinyukang-cuc.github.io/2019/07/21/lodash-assign-extend-merge/index.html">
 <meta property="og:site_name" content="yinyukang">
+<meta property="og:description" content="lodash的对象合并方法的区别assign assignIn assignWith assignInWithassign 将原对象上的可枚举属性并且是hasOwnProperty(prop)为true的属性，复制到目标对象上（注意是浅拷贝）覆盖方式，右边的source的属性会覆盖左边的；target没有的属性，也会被添加进去  assignIn 将原对象上的可枚举属性，并且会将原型链上的属性复制">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-21T04:31:53.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yinyukang">
+<meta name="twitter:title" content="lodash assign,extend,merge">
+<meta name="twitter:description" content="lodash的对象合并方法的区别assign assignIn assignWith assignInWithassign 将原对象上的可枚举属性并且是hasOwnProperty(prop)为true的属性，复制到目标对象上（注意是浅拷贝）覆盖方式，右边的source的属性会覆盖左边的；target没有的属性，也会被添加进去  assignIn 将原对象上的可枚举属性，并且会将原型链上的属性复制">
   
     <link rel="alternative" href="/atom.xml" title="yinyukang" type="application/atom+xml">
   
@@ -150,106 +154,226 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-lodash-assign-extend-merge" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      lodash assign,extend,merge
+    </h1>
+  
+
+        
+        <a href="/yinyukang/2019/07/21/lodash-assign-extend-merge/" class="archive-article-date">
+  	<time datetime="2019-07-21T03:49:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="lodash的对象合并方法的区别"><a href="#lodash的对象合并方法的区别" class="headerlink" title="lodash的对象合并方法的区别"></a>lodash的对象合并方法的区别</h1><h2 id="assign-assignIn-assignWith-assignInWith"><a href="#assign-assignIn-assignWith-assignInWith" class="headerlink" title="assign assignIn assignWith assignInWith"></a>assign assignIn assignWith assignInWith</h2><h3 id="assign"><a href="#assign" class="headerlink" title="assign"></a>assign</h3><blockquote>
+<p>将原对象上的可枚举属性并且是hasOwnProperty(prop)为true的属性，复制到目标对象上（注意是浅拷贝）<br>覆盖方式，右边的source的属性会覆盖左边的；target没有的属性，也会被添加进去</p>
+</blockquote>
+<h3 id="assignIn"><a href="#assignIn" class="headerlink" title="assignIn"></a>assignIn</h3><blockquote>
+<p>将原对象上的可枚举属性，并且会将原型链上的属性复制到目标对象上（注意是浅拷贝）<br>覆盖方式：同上</p>
+</blockquote>
+<h3 id="assignInWith"><a href="#assignInWith" class="headerlink" title="assignInWith"></a>assignInWith</h3><blockquote>
+<p>除了assignIn的功能，还增加了自定义覆盖方式</p>
+</blockquote>
+<pre>
+assignInWith(obj, tar, function(objValue, srcValue, key, obj, source) {
+      return objValue ? objValue : srcValue
+    })
+</pre>
+
+<h3 id="assignWith"><a href="#assignWith" class="headerlink" title="assignWith"></a>assignWith</h3><blockquote>
+<p>除了assign的功能，还增加了自定义覆盖方式</p>
+</blockquote>
+<h2 id="extend-extendWith"><a href="#extend-extendWith" class="headerlink" title="extend extendWith"></a>extend extendWith</h2><blockquote>
+<p>extend 是assign的别名<br>extendWith 是assignWith的别名</p>
+</blockquote>
+<h2 id="merge-mergeWith"><a href="#merge-mergeWith" class="headerlink" title="merge mergeWith"></a>merge mergeWith</h2><h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>递归合并来源自身以及来源原型链上的属性到目标对象上</p>
+<blockquote>
+<p>1.对象和数组会递归合并<br>2.如果目标值已经存在，如果来源的值是undefined，那么该属性会被跳过</p>
+</blockquote>
+<pre>
+function foo() {
+      this.a = 1
+    }
+    function bar() {
+      this.b = 2
+    }
+    foo.prototype.c = 3
+    bar.prototype.d = 4
+    let obj = { a: 0 }
+    let fooInstance = new foo()
+    let barInstance = new bar()
+    merge(obj, fooInstance, barInstance)  //{a: 1, c: 3, b: 2, d: 4} "obj"
+</pre>
+<blockquote>
+<p>结果：obj的a属性被覆盖，另外源对象上的属性也被复制过来</p>
+</blockquote>
+<pre>
+  function foo() {
+      this.a = [1, 2]
+    }
+    function bar() {
+      this.b = {
+        name: 'helo',
+        arr: [{ name: 'helo1', arr: [{ name: 'hello2' }] }],
+      }
+    }
+    foo.prototype.c = 3
+    bar.prototype.d = 4
+    let obj = { a: [3, 4, 5] }
+    let fooInstance = new foo()
+    let barInstance = new bar()
+    mergeWith(obj, fooInstance, barInstance)
+</pre>
+<pre>
+a: (3) [1, 2, 5]
+b: {name: "helo", arr: Array(1)}
+c: 3
+d: 4
+</pre>
+
+<blockquote>
+<p>结果：看a属性，源的属性的值替换target的属性值（数组相同index的值被替换），不是替换整个数组</p>
+</blockquote>
+<h3 id="mergeWith"><a href="#mergeWith" class="headerlink" title="mergeWith"></a>mergeWith</h3><blockquote>
+<p>除了merge的功能，还可以自定义复制规则</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/yinyukang/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/28/vue-element-admin源码解析/" class="archive-article-date">
-  	<time datetime="2019-06-28T02:35:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/28/vue-element-admin源码解析/">vue-element-admin源码解析</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://yinyukang-cuc.github.io/2019/07/21/lodash-assign-extend-merge/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/27/windows本地整合jenkins和github/" class="archive-article-date">
-  	<time datetime="2019-06-27T02:13:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/yinyukang/2019/07/21/reduce用法总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">reduce用法总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/27/windows本地整合jenkins和github/">windows持续集成jenkins和github构建vue</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/yinyukang/2019/06/27/hello-world/" class="archive-article-date">
-  	<time datetime="2019-06-27T01:32:54.018Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/yinyukang/2019/06/27/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/yinyukang/archives/2019/">&laquo; Prev</a><a class="page-number" href="/yinyukang/archives/2019/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -273,8 +397,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
